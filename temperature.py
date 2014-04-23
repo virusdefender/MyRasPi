@@ -1,4 +1,5 @@
 #coding=utf-8
+"""获取树莓派的CPU和GPU温度，并上传到yeelink"""
 import commands
 import requests
 import json

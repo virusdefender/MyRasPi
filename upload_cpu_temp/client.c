@@ -16,26 +16,16 @@
 //#define REMOTE_IP "192.168.1.104"
 
 
- int GetCpuTemp() {
-//char *GetCpuTemp() {
+float GetCpuTemp() {
 
-    int fd, size;
-    int temp = 0;
+   int fd, size;
    char buffer[15] = { };
    fd = open("/sys/class/thermal/thermal_zone0/temp", O_RDONLY);
    size = read(fd,buffer, sizeof(buffer));
    close(fd);
-    int tmp;
-  // strcpy(tmp,buffer);
-
-   temp = atoi(buffer);
-  // printf("temp = %d\n",temp / 1000);
-
-  // sprintf(tmp,"%d",temp / 1000);
-  // printf(" temp1 =%s\n",tmp);
-  // printf(" temp2 = %s\n",buffer);
-
-   return (temp/1000) ;
+   float tf = atof(buffer);
+   printf("RasPi Cpu Tempture = %2.2f\n", tf/1000);
+   return (tf/1000); 
 }
 
 
@@ -46,14 +36,11 @@ int   main(int argc,char *argv[])
    struct sockaddr_in addr ;
     char mybuffer[256];
 	char *str1="POST /v1.0/device/19374/sensor/33945/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
-	char *str2="U-ApiKey: 108968b03a7e9334b2aca7c45b199dee\r\nContent-Length: 12\r\nContent-type: application/json;charset=utf-8\r\n";
+	char *str2="U-ApiKey: 108968b03a7e9334b2aca7c45b199dee\r\nContent-Length: 15\r\nContent-type: application/json;charset=utf-8\r\n";
 	char *str3="\r\n";
         char *str10;
-        printf("GetCpuTemp() = %d\n",GetCpuTemp());
-      
-       sprintf(str10,"{\"value\":%d}\r\n",GetCpuTemp());
-    //   printf("str10 = %s\n", str10);
-   //    char *str10="{\"value\":14}\r\n";
+      //  printf("GetCpuTemp() = %2.2f\n",GetCpuTemp());
+       sprintf(str10,"{\"value\":%2.2f}\r\n",GetCpuTemp());
    //  printf("str10 = %s\n",str10);
        
    if( (s=socket(AF_INET,SOCK_STREAM,0))<0 )  //IPV4 TCP

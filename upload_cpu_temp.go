@@ -6,6 +6,7 @@ import (
    "net"
    "time"
    "os"
+   "strconv"
 )
 
 
@@ -16,6 +17,26 @@ func checkError(err error) {
 
         }
 }
+
+func GetCpuTemp() (t float32) {
+      tf ,err := os.Open("/sys/class/thermal/thermal_zone0/temp")
+      if err != nil {
+      fmt.Printf("Read Cpu file error = %s\n",err.Error())
+      }
+      defer tf.Close()
+      data := make([]byte,5)
+      tf.Read(data)
+      data_temp := string(data)
+      temp, _ := strconv.Atoi(data_temp)
+      var tt float32
+      tt = float32(temp)
+      fmt.Printf("Cpu temp  = %2.2f\n", tt/1000.00)
+      
+      return (tt/1000.00)
+
+
+}
+
 
 
 
@@ -28,6 +49,8 @@ func main() {
         defer conn.Close()
         checkError(err)
         fmt.Printf("Post Request \n")
+//        fmt.Printf("Cpu temp = %2.2f\n", GetCpuTemp())
+   
         time.Sleep(time.Second)
  
     _  , err = conn.Write([]byte("POST /v1.0/device/19374/sensor/33945/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n")) 
@@ -58,7 +81,7 @@ func main() {
       time.Sleep(time.Second)
       var value string 
            
-      value = fmt.Sprintf("{\"value\":19.12}\n\n")
+      value = fmt.Sprintf("{\"value\":%2.2f}\n\n",GetCpuTemp())
       
       
      //_ , err = conn.Write([]byte("{\"value\":13.14}\r\n"))

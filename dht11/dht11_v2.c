@@ -45,8 +45,8 @@ int dht11_read_val(){
     }
     // verify checksum and print the verified data
     if((j>=40)&&(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF))){
-        printf("RH:%d.%d\tTEMP:%d.%d\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
-        // printf("RH:%d,TEMP:%d\n",dht11_val[0],dht11_val[2]);
+       // printf("RH:%d.%d\tTEMP:%d.%d\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
+         printf("RH:%d,TEMP:%d\n",dht11_val[0],dht11_val[2]);
         return 1;
     }
     else

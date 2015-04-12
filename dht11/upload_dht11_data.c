@@ -33,14 +33,14 @@ int dht11_val[5]={0,0,0,0,0};
 #define TEMP_YEELINK 11
 #define RH_YEELINK   12 
 
-int upload_data_yeelink(int type , int val) {
+int upload_data_yeelink(/* int type , */ int val) {
 
      int s ;
    struct sockaddr_in addr ;
     char mybuffer[256] = {'\0'} ;
         //char *str1="POST /v1.0/device/19702/sensor/34550/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
         char *str1="POST /v1.0/device/19702/sensor/34550/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
-       printf("test type = %d\n",type);
+//       printf("test type = %d\n",type);
        
 //       if (type == 11) {
         //sprintf(str1,"%s", "POST /v1.0/device/19702/sensor/34550/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n");
@@ -74,7 +74,9 @@ int upload_data_yeelink(int type , int val) {
     	printf("socked id: %d \n",s);
 	}
 
-   bzero(&addr,sizeof(addr));
+    //bzero(&addr,sizeof(addr));
+    memset(&addr, 0, sizeof(addr));
+    
    addr.sin_family =AF_INET;  //IPV4
    addr.sin_port=htons(PORT); //SERVER PORT
    addr.sin_addr.s_addr=inet_addr(REMOTE_IP);  //SERVER IP
@@ -133,7 +135,9 @@ int upload_data_yeelink(int type , int val) {
    
    while(1 )
    {
-         bzero(mybuffer,sizeof(mybuffer));
+         // bzero(mybuffer,sizeof(mybuffer));
+         memset(mybuffer, 0, 256*sizeof(char));
+         
          recv(s ,mybuffer,sizeof(mybuffer),0);
        //  printf("received:%s\n",mybuffer);
          if (strlen(mybuffer) == 0 ){    // if strlen(mybuffer) == 0, exit the loop
@@ -144,7 +148,7 @@ int upload_data_yeelink(int type , int val) {
   return 1;
 }
 
-int dht11_read_val(){
+int dht11_read_val(int *tem,int *r){
     uint8_t lststate=HIGH;         //last state
     uint8_t counter=0;
     uint8_t j=0,i;
@@ -186,31 +190,142 @@ int dht11_read_val(){
          printf("RH:%d,TEMP:%d\n",dht11_val[0],dht11_val[2]);
           int rh = dht11_val[0];
           int temp_t = dht11_val[2];
+          *tem = dht11_val[2];
+          *r   = dht11_val[0]; 
          printf("dht11 for upload_data test\n");
          printf("rh = %d\temp_t = %d\n",rh,temp_t);  
         // upload_data_yeelink(12, rh);
          //sleep(10);  
-         upload_data_yeelink(11,temp_t);
-         sleep(10000);
+        // upload_data_yeelink(11,temp_t);
+         //sleep(10000);
         return 1;
     }
     else
         return 0;
 }
 
-
-int main(void){
+void  get_dht11_val(int * val_temp, int * val_rh) {
+//int main(void){
     int attempts=ATTEMPTS;
+    int temp = 0;
+    int rh   = 0;
+    
     if(wiringPiSetup()==-1)
         exit(1);
     while(attempts){                        //you have 5 times to retry
-        int success = dht11_read_val();     //get result including printing out
-        if (success) {                      //if get result, quit program; if not, retry 5 times then quit
+        int success = dht11_read_val(&temp,&rh);     //get result including printing out
+        if (success) {
+            printf("get temp && rh from dht11 success\ntemp=%d\trh=%d\t\n",temp,rh);
+             *val_temp = temp;
+             *val_rh = rh;
+             //upload_data_yeelink(11,temp);
+            
+
+                  //if get result, quit program; if not, retry 5 times then quit
             break;
         }
         attempts--;
         delay(2500);
     }
-    return 0;
+    //return 0;
 }
+
+
+
+
+int main() {
+     int temp_tt = 0;
+     int rh   = 0;
+//      get_dht11_val(&temp_tt,&rh);
+  //    printf("temp = %d\trh= %d\t\n",temp_tt,rh);
+int s ;
+   struct sockaddr_in addr ;
+    char mybuffer[256];
+	char *str1="POST /v1.0/device/19702/sensor/34550/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
+	char *str2="U-ApiKey: 108968b03a7e9334b2aca7c45b199dee\r\nContent-Length: 12\r\nContent-type: application/json;charset=utf-8\r\n";
+	char *str3="\r\n";
+        char *str10;
+      //  printf("GetCpuTemp() = %2.2f\n",GetCpuTemp());
+       
+        //sprintf(str10,"{\"value\":%d}\r\n",temp_tt);
+        str10="{\"value\":17}\r\n";
+         
+   //  printf("str10 = %s\n",str10);
+       
+   if( (s=socket(AF_INET,SOCK_STREAM,0))<0 )  //IPV4 TCP
+   {
+      perror("socket");
+      exit(1);
+   }
+   else
+   {
+    	printf("socket created .\n");
+    	printf("socked id: %d \n",s);
+	}
+
+   bzero(&addr,sizeof(addr));
+   addr.sin_family =AF_INET;  //IPV4
+   addr.sin_port=htons(PORT); //SERVER PORT
+   addr.sin_addr.s_addr=inet_addr(REMOTE_IP);  //SERVER IP
+
+   if(connect(s,(struct sockaddr *)&addr,sizeof(addr))<0)
+   {
+      perror("connect");
+      exit(1);
+   }
+   else
+   {
+   	   printf("connected ok!\n");
+   	   printf("remote ip:%s\n",REMOTE_IP);
+   	   printf("remote port:%d\n",PORT);
+    }
+
+	bzero(mybuffer,sizeof(mybuffer));
+
+//send http request
+	printf("tcp send start!--");
+   if(send(s,str1,strlen(str1),0)<0)
+      {
+         perror("send");
+         exit(1);
+      }
+   if(send(s,str2,strlen(str2),0)<0)
+      {
+         perror("send");
+         exit(1);
+      }
+   if(send(s,str3,strlen(str3),0)<0)
+      {
+         perror("send");
+         exit(1);
+      }
+//body
+   if(send(s,str10,strlen(str10),0)<0)
+      {
+         perror("send");
+         exit(1);
+      }
+
+   printf("tcp send ok!--");
+
+   recv(s ,mybuffer,sizeof(mybuffer),0);
+   printf("%s\n",mybuffer);
+   printf("enter os");
+   
+   while(1 )
+   {
+         bzero(mybuffer,sizeof(mybuffer));
+         recv(s ,mybuffer,sizeof(mybuffer),0);
+       //  printf("received:%s\n",mybuffer);
+         if (strlen(mybuffer) == 0 ){    // if strlen(mybuffer) == 0, exit the loop
+           return 0;
+        }
+    }
+    return 0;
+
+
+}
+
+
+
 

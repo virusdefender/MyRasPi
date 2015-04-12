@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-
+#include <memory.h>
 
 //for dht11 sensor 
 #include <wiringPi.h>
@@ -37,26 +37,32 @@ int upload_data_yeelink(int type , int val) {
 
      int s ;
    struct sockaddr_in addr ;
-    char mybuffer[256];
-        char *str1;
+    char mybuffer[256] = {'\0'} ;
+        //char *str1="POST /v1.0/device/19702/sensor/34550/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
+        char *str1="POST /v1.0/device/19702/sensor/34550/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
        printf("test type = %d\n",type);
        
-       if (type == 11) {
-        str1= "POST /v1.0/device/19702/sensor/34550/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
-        } else  {
-        str1="POST /v1.0/device/19702/sensor/34551/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
-        }
+//       if (type == 11) {
+        //sprintf(str1,"%s", "POST /v1.0/device/19702/sensor/34550/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n");
+  //      printf("str1 = %s\n",str1);
+      
+    //    } else  {
+      // sprintf(str1,"%s","POST /v1.0/device/19702/sensor/34551/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n");
+        //printf("str1 = %s\n",str1);        
+//}
+
 
 	//char *str1="POST /v1.0/device/19374/sensor/33945/datapoints HTTP/1.0\r\nHost: api.yeelink.net\r\nAccept: */*\r\n";
 	char *str2="U-ApiKey: 108968b03a7e9334b2aca7c45b199dee\r\nContent-Length: 12\r\nContent-type: application/json;charset=utf-8\r\n";
 	char *str3="\r\n";
         char *str10;
-        printf("test value = %d\n",val);
+      //  printf("test value = %d\n",val);
        int t = val;
-         
+    //    printf("str2 = %s\n",str2); 
        sprintf(str10,"{\"value\":%d}\r\n",t);
-       printf("str10 = %s\n",str10);
-       
+  //     printf("str10 = %s\n",str10);
+//       printf("str1 = %s\n", str1);
+     
    if( (s=socket(AF_INET,SOCK_STREAM,0))<0 )  //IPV4 TCP
    {
       perror("socket");
@@ -84,11 +90,16 @@ int upload_data_yeelink(int type , int val) {
    	   printf("remote ip:%s\n",REMOTE_IP);
    	   printf("remote port:%d\n",PORT);
     }
-
+        printf("test for tcp send\n");
           
-        printf("str1 = %s\n",str1);
-	bzero(mybuffer,sizeof(mybuffer));
-
+        // printf("str1 = %s\n",str1);
+        //printf("str1 = %s\n",str1);
+	//bzero(mybuffer,sizeof(mybuffer));
+        //bzero(mybuffer,256);
+        //memset(mybuffer, 0, 256*sizeof(char));
+        printf("after memset()");
+        
+          
 //send http request
 	printf("tcp send start!--");
          
@@ -177,10 +188,10 @@ int dht11_read_val(){
           int temp_t = dht11_val[2];
          printf("dht11 for upload_data test\n");
          printf("rh = %d\temp_t = %d\n",rh,temp_t);  
-         upload_data_yeelink(12, rh);
-         sleep(10);  
+        // upload_data_yeelink(12, rh);
+         //sleep(10);  
          upload_data_yeelink(11,temp_t);
-         
+         sleep(10000);
         return 1;
     }
     else

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include "dht11_v2.1.h"
+
 #define MAX_TIME 85
 #define DHT11PIN 1
 #define ATTEMPTS 5                 //retry 5 times when no response
@@ -54,21 +56,31 @@ int dht11_read_val(int *tem, int *r){
     else
         return 0;
 }
-  
-int main(void){
+ 
+void GetDht11_data(int *temp, int *rh){
     int attempts=ATTEMPTS;
-    int temp = 0;
-    int rh = 0;
     if(wiringPiSetup()==-1)
         exit(1);
     while(attempts){                        //you have 5 times to retry
-        int success = dht11_read_val(&temp,&rh);     //get result including printing out
+        int success = dht11_read_val(temp,rh);     //get result including printing out
         if (success) {
-        printf("get temp && rh from dht11\ntemp= %d\trh=%d\n",temp,rh);                      //if get result, quit program; if not, retry 5 times then quit
+        printf("get temp && rh from dht11\ntemp= %d\trh=%d\n",*temp,*rh);                      //if get result, quit program; if not, retry 5 times then quit
             break;
         }
         attempts--;
         delay(2500);
     }
-    return 0;
+
 }
+/*
+
+int main() {
+       int t,r;
+       t = 0;
+       r = 0;    
+       GetDht11_data(&t,&r);
+       printf("temp = %d\trh=%d\n",t,r);
+       return 0;
+}
+*/
+

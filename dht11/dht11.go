@@ -42,7 +42,7 @@ import (
 
            for  DigitalRead(PIN_GPIO_1) == lststate   {   //read pin state to see if dht responsed. if dht always high for 255 + 1 times, break this while circle
                    counter++
-                   fmt.Printf("Counter = %d\n",counter)
+                //   fmt.Printf("Counter = %d\n",counter)
                    DelayMicroseconds(1)
                    if counter == 255 {
                            break
@@ -50,21 +50,25 @@ import (
 
                            lststate = DigitalRead(PIN_GPIO_1) //read current state and store as last
 
-                if  counter==255 {                          //if dht always high for 255 + 1 times, break this for circle
+                      // fmt.Printf("lststate = %d\n",lststate)
+                       
+                      if  counter==255 {                          //if dht always high for 255 + 1 times, break this for circle
                          break
                                    }
         // top 3 transistions are ignored, maybe aim to wait for dht finish response signal
          for  i>=4 && i%2==0 {
-           fmt.Printf("j = %d\n",j)
+           //fmt.Printf("j = %d\n",j)
           if j > 38  {
              break
             }
-           fmt.Printf("dht11_val[%d] = %d\n",j/8,dht11_val[j/8] )
+          // fmt.Printf("dht11_val[%d] = %d\n",j/8,dht11_val[j/8] )
 
             dht11_val[j/8] = dht11_val[j/8] << 1                  //write 1 bit to 0 by moving left (auto add 0)
             if counter > 16 {                    //long mean 1
+            //    fmt.Printf("counter > 16 :: counter == %d\n",counter)
+                
                 dht11_val[j/8] = dht11_val[j/8] |1                //write 1 bit to 1
-                fmt.Printf(" counter :: dht11_val[%d] = %d\n", j/8 , dht11_val[j/8])
+              //  fmt.Printf(" counter :: dht11_val[%d] = %d\n", j/8 , dht11_val[j/8])
 
 
 
@@ -87,8 +91,8 @@ return 0
 
 
 func main() {
-//    attemptes := ATTEMPS
-      var success int
+       attemptes := ATTEMPS
+       var success int
        success = 0
 
         err :=  WiringPiSetup()
@@ -97,13 +101,13 @@ func main() {
         os.Exit(1)
         }
 
-        for attemptes := ATTEMPS; attemptes > 0;  attemptes-- {
+        for  attemptes > 0 {
          success = dht11_read_val()
          if success == 1  {
          break
          }
 
-
+         attemptes--
          Delay(2500)
         }
        os.Exit(0)

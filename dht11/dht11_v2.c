@@ -32,7 +32,10 @@ int dht11_read_val(){
             if(counter==255)
                 break;
         }
+        
         lststate=digitalRead(DHT11PIN);             //read current state and store as last state. 
+        printf("i = %d\tPin_state = %d\n",i,lststate);
+         
         if(counter==255)                            //if dht always high for 255 + 1 times, break this for circle
             break;
         // top 3 transistions are ignored, maybe aim to wait for dht finish response signal

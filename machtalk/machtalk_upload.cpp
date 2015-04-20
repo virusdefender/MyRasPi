@@ -43,7 +43,7 @@ int main() {
 
      std::thread t1; //t1 is not a thread 
      std::thread t2(machtalk_post,"df104baddce24fd0a5e976c90fc07df3","1","1",temp,3);
-
+     sleep(10);
      std::thread t3(machtalk_post,"df104baddce24fd0a5e976c90fc07df3","2","1",rh,3);
      t2.join();
      t3.join();

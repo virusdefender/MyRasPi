@@ -17,8 +17,10 @@
 #include <fcntl.h> 
 #include <unistd.h> 
 #include <wiringPi.h>
-int  get_cpu_temperature(double *temperature)
-{
+
+#include "machtalk_v1.h" 
+
+int  get_cpu_temperature(double *temperature) {
         #define TEMP_PATH "/sys/class/thermal/thermal_zone0/temp" 
         #define MAX_SIZE 32  
     int fd;  
@@ -47,8 +49,8 @@ int  get_cpu_temperature(double *temperature)
 
 
 
-void  machtalk_post(const char *device_id,const char *device_value_id,const char *device_value_type_id,float value,int overtime)
-{
+void  machtalk_post(const char *device_id,const char *device_value_id,const char *device_value_type_id,float value,int overtime) {
+
         int ret;
         int cfd; /* 文件描述符 */
         char* presult;
@@ -155,10 +157,10 @@ void  machtalk_post(const char *device_id,const char *device_value_id,const char
                 printf("Http Response Error\r\n");
         }
         close(cfd);
-        exit(0);
+       // exit(0);
 }
 
-
+/*
 int main() {
     double CPU_Temperature;
     
@@ -174,5 +176,6 @@ int main() {
     return 0;
 }
 
+*/
 
  

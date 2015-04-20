@@ -6,6 +6,8 @@ http://www.yeelink.net/devices/9311 可以在这里看到结果。
 
 Add C language && golang support  
 Add DHT11 sensor support 
+Add machtalk.net support 
+add std::thread support (need c++11 support , just add -std=c++11 )
 
 
 

@@ -33,6 +33,14 @@
 * device_name = "df104baddce24fd0a5e976c90fc07df3" 
 */
 
+
+
+
+
+
+
+
+
 void machtalk_upload(const char* device_name,const char* val) {
 
 
@@ -105,14 +113,14 @@ void machtalk_upload(const char* device_name,const char* val) {
    	   printf("remote ip:%s\n",REMOTE_IP);
    	   printf("remote port:%d\n",PORT);
     }
-        printf("test for tcp send\n");
+        //printf("test for tcp send\n");
           
         // printf("str1 = %s\n",str1);
         //printf("str1 = %s\n",str1);
 	//bzero(mybuffer,sizeof(mybuffer));
         //bzero(mybuffer,256);
-        //memset(mybuffer, 0, 256*sizeof(char));
-        printf("after memset()");
+        memset(mybuffer, 0, 256*sizeof(char));
+        //printf("after memset()");
         
           
 //send http request

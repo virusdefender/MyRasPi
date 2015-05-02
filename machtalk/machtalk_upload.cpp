@@ -32,6 +32,50 @@ using namespace std;
 
 std::mutex g_mutex;
 
+/*
+struct dht11_data {
+    int temp; //
+    int rh; //
+};
+
+
+//class Machtalk {
+//for machtalk upload 
+//
+class Machtalk {
+   public:
+       Machtalk(string device_id,string device_value_id,string device_value_type_id,double value,int overtime) : device_id_{device_id},device_value_id_{device_value_id},device_value_type_id_{device_value_type_id},value_{value},overtime_{overtime} {}
+       
+       ~Machtalk() {}
+    static void GetDHT11Data(dht11_data &dh) {
+      GetDht11_data(&dh.temp,&dh.rh);
+     }
+   
+     void Post() {
+     machtalk_mutex.lock();
+     machtalk_post(device_id_.c_str(),device_value_id_.c_str(),device_value_type_id_.c_str(),value_,overtime_);
+     machtalk_mutex.unlock();
+     }
+      
+
+    
+    private:
+        string device_id_;
+        string device_value_id_;
+        string device_value_type_id_;
+        double value_;
+        int overtime_;
+        dht11_data dh_;
+        std::mutex machtalk_mutex;  
+};
+
+
+      
+        
+*/
+
+
+
 void Machtalk_Post(string device_id, string device_value_id, string device_value_type_id, float value, int overtime) {
      g_mutex.lock();
      machtalk_post(device_id.c_str(),device_value_id.c_str(),device_value_type_id.c_str(),value,overtime);
@@ -40,7 +84,6 @@ void Machtalk_Post(string device_id, string device_value_id, string device_value
 }   
 
 
-using namespace std;
 
 
 

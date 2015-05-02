@@ -1,0 +1,5 @@
+project(machtalk_upload)
+set(SRC_LIST dht11_v2.1.c machtalk_v1.c machtalk_upload.cpp)
+set(CMAKE_CXX_FLAGS "-std=c++11")
+add_executable(machtalk_upload ${SRC_LIST})
+target_link_libraries(machtalk_upload -lwiringPi)

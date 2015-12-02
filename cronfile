@@ -1,5 +1,2 @@
-*/60 * * * *   /home/pi/yeelink.sh 
-*/60 * * * *  echo "hello test" >> /home/pi/test.txt
-*/60 * * * *   /home/pi/yeelink-720.sh
-*/1  * * * *   /home/pi/upload_cpu_temp    
+*/1  * * * *   /home/pi/machtalk_dht22
 

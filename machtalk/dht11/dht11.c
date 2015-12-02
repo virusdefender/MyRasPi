@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "dht11_v2.1.h"
+#include "dht11.h"
 
 #define MAX_TIME 85
-#define DHT11PIN 1
+#define DHT11PIN 16
 #define ATTEMPTS 5                 //retry 5 times when no response
 int dht11_val[5]={0,0,0,0,0};
   
@@ -47,7 +47,8 @@ int dht11_read_val(int *tem, int *r){
     }
     // verify checksum and print the verified data
     if((j>=40)&&(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF))){
-       // printf("RH:%d.%d\tTEMP:%d.%d\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
+       
+         printf("RH:%d.%d\tTEMP:%d.%d\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
          printf("RH:%d,TEMP:%d\n",dht11_val[0],dht11_val[2]);
          *tem = dht11_val[2];
          *r   = dht11_val[0]; 
@@ -72,8 +73,7 @@ void GetDht11_data(int *temp, int *rh){
     }
 
 }
-/*
-
+#if 0
 int main() {
        int t,r;
        t = 0;
@@ -82,5 +82,6 @@ int main() {
        printf("temp = %d\trh=%d\n",t,r);
        return 0;
 }
-*/
+#endif 
+
 

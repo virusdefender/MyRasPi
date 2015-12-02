@@ -73,7 +73,7 @@ void GetDht11_data(int *temp, int *rh){
     }
 
 }
-#if 1
+#if 0
 int main() {
        int t,r;
        t = 0;

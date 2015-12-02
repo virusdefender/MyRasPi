@@ -77,8 +77,7 @@ void  machtalk_post(const char *api_token,const char *device_id,const char *devi
         sprintf( str_tmp , "Host:%s\r\n" , remote_server);
         strcat( http_request , str_tmp);
         // 增加密码 例如 APIKey: ffa3826972d6cc7ba5b17e104ec59fa3
-        sprintf( str_tmp , "APIKey:%s\r\n" , api_token);
-        //sprintf( str_tmp , "APIKey:%s\r\n" , "95345cb2cbc945da978afb4441da6bcf");//需要替换为自己的APIKey
+        sprintf( str_tmp , "APIKey:%s\r\n" , api_token); 
         strcat( http_request , str_tmp);
         //
         strcat( http_request , "Accept: */*\r\n");

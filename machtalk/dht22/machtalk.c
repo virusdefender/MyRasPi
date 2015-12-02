@@ -38,7 +38,7 @@ void  machtalk_post(const char *api_token,const char *device_id,const char *devi
     socklen_t len = sizeof(struct timeval);
      
         sprintf(str_tmp,"/v1.0/device/%s/%s/%s/datapoints/add",device_id,device_value_id,device_value_type_id);
-       //http://dev.api.machtalk.net:12086/v1.0/device/df104baddce24fd0a5e976c90fc07df3/1/1/datapoints/add
+       
         // 确定HTTP表单提交内容 params={"value":20}
         sprintf( http_content , "params={\"value\":%.2f}" , value);
         // 确定 HTTP请求首部
@@ -49,9 +49,7 @@ void  machtalk_post(const char *api_token,const char *device_id,const char *devi
         strcat( http_request , str_tmp);
         // 增加密码 例如 APIKey: ffa3826972d6cc7ba5b17e104ec59fa3
         sprintf( str_tmp , "APIKey:%s\r\n" ,api_token);
-        //sprintf( str_tmp , "APIKey:%s\r\n" , "95345cb2cbc945da978afb4441da6bcf");//需要替换为自己的APIKey
         strcat( http_request , str_tmp);
-        //
         strcat( http_request , "Accept: */*\r\n");
         // 增加提交表单内容的长度 例如 Content-Length:12\r\n
       //  printf("D:%s\n",http_content);

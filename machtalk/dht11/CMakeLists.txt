@@ -1,5 +1,5 @@
 #CMakeLists.txt for build machtalk_upload 
-project(machtalk_upload)
+project(machtalk_dht11)
 cmake_minimum_required(VERSION 2.8)
 #INCLUDE (CheckTypeSize)
 
@@ -16,10 +16,11 @@ else()
 endif()
 
 
-set(SRC_LIST dht11_v2.1.c machtalk_v1.c machtalk_upload.cpp)
+set(SRC_LIST dht11.c machtalk.c machtalk_dht11.cpp)
 #set(CMAKE_CXX_FLAGS "-std=c++11")
-add_executable(machtalk_upload ${SRC_LIST})
-target_link_libraries(machtalk_upload -lwiringPi)
+add_executable(machtalk_dht11 ${SRC_LIST})
+target_link_libraries(machtalk_dht11 -lwiringPi)
+target_link_libraries(machtalk_dht11 -lpthread)
 
 #add_definitions("-Wall")
 #add_definitions("-std=c++11") 

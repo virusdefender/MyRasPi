@@ -16,45 +16,17 @@
 #include <sys/stat.h>  
 #include <fcntl.h> 
 #include <unistd.h> 
+
 #include <wiringPi.h>
 
-#include "machtalk_v1.h" 
+#include "machtalk.h" 
 
-int  get_cpu_temperature(double *temperature) {
-        #define TEMP_PATH "/sys/class/thermal/thermal_zone0/temp" 
-        #define MAX_SIZE 32  
-    int fd;  
-    char buf[MAX_SIZE];  
-       
-    // 打开/sys/class/thermal/thermal_zone0/temp  
-    fd = open(TEMP_PATH, O_RDONLY);  
-    if (fd < 0) {  
-        fprintf(stderr, "failed to open thermal_zone0/temp\n");  
-        return -1;  
-    }  
-       
-    // 读取内容  
-    if (read(fd, buf, MAX_SIZE) < 0) {  
-        fprintf(stderr, "failed to read temp\n");  
-        return -1;  
-    }  
-       
-    // 转换为浮点数打印  
-    *temperature = atoi(buf) / 1000.0;  
-       
-    // 关闭文件  
-    close(fd); 
-        return 0;
-}
-
-
-
-void  machtalk_post(const char *device_id,const char *device_value_id,const char *device_value_type_id,float value,int overtime) {
+void  machtalk_post(const char *api_token,const char *device_id,const char *device_value_id,const char *device_value_type_id,float value,int overtime) {
 
         int ret;
         int cfd; /* 文件描述符 */
         char* presult;
-        char remote_server[] = "api.machtalk.net";
+        char remote_server[] = "dev.api.machtalk.net:12086";
         char str_tmp[128] = {0};
         struct sockaddr_in s_add;
         // 请求缓冲区和响应缓冲区
@@ -66,8 +38,9 @@ void  machtalk_post(const char *device_id,const char *device_value_id,const char
     socklen_t len = sizeof(struct timeval);
      
         sprintf(str_tmp,"/v1.0/device/%s/%s/%s/datapoints/add",device_id,device_value_id,device_value_type_id);
+       //http://dev.api.machtalk.net:12086/v1.0/device/df104baddce24fd0a5e976c90fc07df3/1/1/datapoints/add
         // 确定HTTP表单提交内容 params={"value":20}
-        sprintf( http_content , "params={\"value\":%f}" , value);
+        sprintf( http_content , "params={\"value\":%.2f}" , value);
         // 确定 HTTP请求首部
         // 例如POST /v1.0/device/98d19569e0474e9abf6f075b8b5876b9/1/1/datapoints/add HTTP/1.1\r\n
         sprintf( http_request , "POST %s HTTP/1.1\r\n",str_tmp);
@@ -75,11 +48,13 @@ void  machtalk_post(const char *device_id,const char *device_value_id,const char
         sprintf( str_tmp , "Host:%s\r\n" , remote_server);
         strcat( http_request , str_tmp);
         // 增加密码 例如 APIKey: ffa3826972d6cc7ba5b17e104ec59fa3
-        sprintf( str_tmp , "APIKey:%s\r\n" , "95345cb2cbc945da978afb4441da6bcf");//需要替换为自己的APIKey
+        sprintf( str_tmp , "APIKey:%s\r\n" ,api_token);
+        //sprintf( str_tmp , "APIKey:%s\r\n" , "95345cb2cbc945da978afb4441da6bcf");//需要替换为自己的APIKey
         strcat( http_request , str_tmp);
         //
         strcat( http_request , "Accept: */*\r\n");
         // 增加提交表单内容的长度 例如 Content-Length:12\r\n
+      //  printf("D:%s\n",http_content);
         sprintf( str_tmp , "Content-Length:%d\r\n" ,strlen(http_content) );
         strcat( http_request , str_tmp);
         // 增加表单编码格式 Content-Type:application/x-www-form-urlencoded\r\n
@@ -94,12 +69,7 @@ void  machtalk_post(const char *device_id,const char *device_value_id,const char
         bzero(&s_add,sizeof(struct sockaddr_in));  
         s_add.sin_family=AF_INET;  
         s_add.sin_addr.s_addr= inet_addr("60.211.201.42"); /* ip转换为4字节整形，使用时需要根据服务端ip进行更改 */ 
-        s_add.sin_port=htons(10086); /* 这里htons是将short型数据字节序由主机型转换为网络型，其实就是 
-                将2字节数据的前后两个字节倒换，和对应的ntohs效果、实质相同，只不过名字不同。htonl和ntohl是 
-                操作的4字节整形。将0x12345678变为0x78563412，名字不同，内容两两相同，一般情况下网络为大端， 
-                PPC的cpu为大端，x86的cpu为小端，arm的可以配置大小端，需要保证接收时字节序正确。 
-         */ 
- 
+        s_add.sin_port=htons(12086); //this is the ip port for upload
         /* 建立socket 使用因特网，TCP流传输 */ 
         cfd = socket(AF_INET, SOCK_STREAM, 0);  
         if(-1 == cfd){  
@@ -160,22 +130,5 @@ void  machtalk_post(const char *device_id,const char *device_value_id,const char
        // exit(0);
 }
 
-/*
-int main() {
-    double CPU_Temperature;
-    
-    get_cpu_temperature(&CPU_Temperature);
-   
-    machtalk_post("df104baddce24fd0a5e976c90fc07df3","1","1",CPU_Temperature,3);
-    delay(1500);
-    get_cpu_temperature(&CPU_Temperature);
-    machtalk_post("df104baddce24fd0a5e976c90fc07df3","1","1",CPU_Temperature,3);
-     delay(1000);
-
-      
-    return 0;
-}
-
-*/
 
  

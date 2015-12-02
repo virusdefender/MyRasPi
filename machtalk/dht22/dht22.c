@@ -5,18 +5,17 @@
  *	Amended by technion@lolware.net
  */
 
-#include <wiringPi.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "dht22.h"
 #include "locking.h"
 
-#define MAXTIMINGS 85
-static int DHTPIN = 7;
+//static int DHTPIN = 7;
+#define ATTEMPTS 5
 static int dht22_dat[5] = {0,0,0,0,0};
 
 static uint8_t sizecvt(const int read)
@@ -32,7 +31,8 @@ static uint8_t sizecvt(const int read)
   return (uint8_t)read;
 }
 
-static int read_dht22_dat()
+//static int read_dht22_dat()
+static int read_dht22_dat(float *temp, float *Hum)
 {
   uint8_t laststate = HIGH;
   uint8_t counter = 0;
@@ -86,9 +86,14 @@ static int read_dht22_dat()
         t = (float)(dht22_dat[2] & 0x7F)* 256 + (float)dht22_dat[3];
         t /= 10.0;
         if ((dht22_dat[2] & 0x80) != 0)  t *= -1;
+       
+        *temp = t;
+        *Hum  = h;
 
-
+  if(DEBUG == 1) {
     printf("Humidity = %.2f %% Temperature = %.2f *C \n", h, t );
+   } 
+
     return 1;
   }
   else
@@ -98,36 +103,18 @@ static int read_dht22_dat()
   }
 }
 
-int main (int argc, char *argv[])
-{
-  int lockfd;
-
-  if (argc != 2)
-    printf ("usage: %s <pin>\ndescription: pin is the wiringPi pin number\nusing 7 (GPIO 4)\n",argv[0]);
-  else
-    DHTPIN = atoi(argv[1]);
-   
-
-  printf ("Raspberry Pi wiringPi DHT22 reader\nwww.lolware.net\n") ;
-
-  lockfd = open_lockfile(LOCKFILE);
-
-  if (wiringPiSetup () == -1)
-    exit(EXIT_FAILURE) ;
-	
-  if (setuid(getuid()) < 0)
-  {
-    perror("Dropping privileges failed\n");
-    exit(EXIT_FAILURE);
+void GetDht22_data(float *temp, float * hum) {
+ int attempts = ATTEMPTS;
+ if(wiringPiSetup() == -1) 
+       exit(1);
+ while(attempts) {
+       int success = read_dht22_dat(temp, hum);
+       if (success) {
+        printf("Humidity = %.2f %% Temperature = %.2f *C \n", *hum, *temp );
+        break;
+      }
+       attempts--;
+      delay(2500);
   }
-
-  while (read_dht22_dat() == 0) 
-  {
-     delay(1000); // wait 1sec to refresh
-  }
-
-  delay(1500);
-  close_lockfile(lockfd);
-
-  return 0 ;
 }
+

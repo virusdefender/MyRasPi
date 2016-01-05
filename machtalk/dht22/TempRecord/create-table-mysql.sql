@@ -12,5 +12,7 @@ CREATE TABLE pi_temps (
 	PRIMARY KEY (id)
 ) charset=utf8;
 
+ALTER TABLE pi_temps add update_time datetime NOT NULL COMMENT 'update time';
+
 
 

@@ -25,7 +25,7 @@ void RPI_TEMP_RECORD::Insert(string temp, string hum) {
 		mysql_init(&mysql);
 		mysql_real_connect(&mysql,DB_HOST,DB_USER,DB_PWD,DB_NAME,3306,NULL,0);
 		
-			string sqlstr = "INSERT INTO pi_temps (temp, humi) VALUES(" + temp + "," + hum + ");";	
+			string sqlstr = "INSERT INTO pi_temps (temp, humi,update_time) VALUES(" + temp + "," + hum + ", now()" + ");";	
 			cout << "SQLCMD =" << sqlstr << endl;
 			mysql_query(&mysql,sqlstr.c_str());
 			mysql_close(&mysql);

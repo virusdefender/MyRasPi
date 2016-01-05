@@ -56,7 +56,7 @@ void Machtalk_Post(string api_token,string device_id, string device_value_id, st
 int main() {
     float temp;
     float hum;
-    string api_token = "You machtalk APIToken";
+    string api_token = "95345cb2cbc945da978afb4441da6bcf";
     GetDht22_data(&temp, &hum);
 #ifdef DB_SUPPORT
 	Insert(float2string(temp),float2string(hum));

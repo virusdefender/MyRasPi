@@ -1,3 +1,5 @@
+# pickup example from http://curran.blog.51cto.com/2788306/533169
+
 # dep
 	apt-get install -y libmysqlclient-dev 
 

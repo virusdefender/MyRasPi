@@ -15,8 +15,8 @@
 #include <functional>
 #include <atomic>
 #include <mutex>
-
-#ifdef DB_SUPPORT
+#include "config.h"
+#ifdef SUPPORT_MYSQL_DB
 #include "record_temp.hpp"
 #endif 
 
@@ -30,7 +30,7 @@ std::mutex g_mutex;
 
 //#define api_token "95345cb2cbc945da978afb4441da6bcf"
 
-#ifdef DB_SUPPORT
+#ifdef SUPPORT_MYSQL_DB
 std::string float2string(float val) {
 	stringstream ss(stringstream::in | stringstream::out);
 	ss << val;
@@ -58,7 +58,7 @@ int main() {
     float hum;
     string api_token = "95345cb2cbc945da978afb4441da6bcf";
     GetDht22_data(&temp, &hum);
-#ifdef DB_SUPPORT
+#ifdef SUPPORT_MYSQL_DB
 	Insert(float2string(temp),float2string(hum));
 #endif 
      std::thread t1; //t1 is not a thread 

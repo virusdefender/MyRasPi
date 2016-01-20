@@ -12,7 +12,7 @@ ADD_DEFINITIONS("-I/usr/include/mysql")
 SET(CMAKE_INSTALL_PREFIX /usr)
 ADD_LIBRARY(TempRecord SHARED ${MYSQL_TEMP_RECORD_SRCS})
 
-set(CMAKE_CXX_CFLAGS "-Wl,-soname=libTempRecord.so,-rpath=/usr/local/lib")
+set(CMAKE_CXX_CFLAGS "-Wl,-soname=libTempRecord.so,-rpath=/usr/lib")
 target_link_libraries(TempRecord -lmysqlclient)
 INSTALL(TARGETS TempRecord   DESTINATION lib)
 INSTALL(FILES record_temp.hpp DESTINATION include)

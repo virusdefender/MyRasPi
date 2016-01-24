@@ -1,0 +1,4 @@
+/usr/bin/machtalk_dht22
+/usr/include/config.h
+/usr/lib/libTempRecord.so
+/usr/include/record_temp.hpp

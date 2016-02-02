@@ -265,6 +265,30 @@ machtalk_dht22.cpp.s:
 	$(MAKE) -f CMakeFiles/machtalk_dht22.dir/build.make CMakeFiles/machtalk_dht22.dir/machtalk_dht22.cpp.s
 .PHONY : machtalk_dht22.cpp.s
 
+rpi_cpu_temp.o: rpi_cpu_temp.c.o
+.PHONY : rpi_cpu_temp.o
+
+# target to build an object file
+rpi_cpu_temp.c.o:
+	$(MAKE) -f CMakeFiles/machtalk_dht22.dir/build.make CMakeFiles/machtalk_dht22.dir/rpi_cpu_temp.c.o
+.PHONY : rpi_cpu_temp.c.o
+
+rpi_cpu_temp.i: rpi_cpu_temp.c.i
+.PHONY : rpi_cpu_temp.i
+
+# target to preprocess a source file
+rpi_cpu_temp.c.i:
+	$(MAKE) -f CMakeFiles/machtalk_dht22.dir/build.make CMakeFiles/machtalk_dht22.dir/rpi_cpu_temp.c.i
+.PHONY : rpi_cpu_temp.c.i
+
+rpi_cpu_temp.s: rpi_cpu_temp.c.s
+.PHONY : rpi_cpu_temp.s
+
+# target to generate assembly for a file
+rpi_cpu_temp.c.s:
+	$(MAKE) -f CMakeFiles/machtalk_dht22.dir/build.make CMakeFiles/machtalk_dht22.dir/rpi_cpu_temp.c.s
+.PHONY : rpi_cpu_temp.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -291,6 +315,9 @@ help:
 	@echo "... machtalk_dht22.o"
 	@echo "... machtalk_dht22.i"
 	@echo "... machtalk_dht22.s"
+	@echo "... rpi_cpu_temp.o"
+	@echo "... rpi_cpu_temp.i"
+	@echo "... rpi_cpu_temp.s"
 .PHONY : help
 
 

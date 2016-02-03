@@ -25,6 +25,7 @@ configure_file(
 set(SRC_LIST dht22.c 
 		locking.c 
 		machtalk.c 
+		rpi_cpu_temp.c
 		machtalk_dht22.cpp)
 
 #set(CMAKE_CXX_FLAGS "-std=c++11")
@@ -44,7 +45,7 @@ target_link_libraries(machtalk_dht22 -lpthread)
 
 if (SUPPORT_MYSQL_DB)
 	LINK_DIRECTORIES("/usr/local/lib")
-	TARGET_LINK_LIBRARIES(machtalk_dht22  -ldl -lrt -Wl,-rpath=/usr/lib  -L/usr/lib -lTempRecord ${EXTRA_LIBS})
+	TARGET_LINK_LIBRARIES(machtalk_dht22   -ldl -lrt -Wl,-rpath=./TempRecord,-rpath=/usr/lib  -L/usr/lib -L./TempRecord -lTempRecord ${EXTRA_LIBS})
 endif (SUPPORT_MYSQL_DB)
 
 #SET(EXECUTABLE_OUTPUT_PATH /usr/local/bin)

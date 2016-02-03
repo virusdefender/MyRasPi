@@ -19,8 +19,8 @@ using namespace std;
 #define DB_PWD   "447826004"
 
 
-
-void RPI_TEMP_RECORD::Insert(string temp, string hum) {
+/*
+void RPI_TEMP_RECORD::RPI_TEMP_RECORD::Insert(string temp, string hum) {
 		MYSQL	 mysql;
 		mysql_init(&mysql);
 		mysql_real_connect(&mysql,DB_HOST,DB_USER,DB_PWD,DB_NAME,3306,NULL,0);
@@ -31,4 +31,18 @@ void RPI_TEMP_RECORD::Insert(string temp, string hum) {
 			mysql_close(&mysql);
 	 
 }
+*/
+void RPI_TEMP_RECORD::insert(std::string temp, std::string hum,std::string pi_cpu_temp){
+		MYSQL	 mysql;
+		mysql_init(&mysql);
+		mysql_real_connect(&mysql,DB_HOST,DB_USER,DB_PWD,DB_NAME,3306,NULL,0);
+		
+			string sqlstr = "INSERT INTO pi_temps (temp, humi,rpi_cpu_temp,update_time) VALUES(" + temp + "," + hum + "," + pi_cpu_temp + ", now()" + ");";	
+			cout << "SQLCMD =" << sqlstr << endl;
+			mysql_query(&mysql,sqlstr.c_str());
+			mysql_close(&mysql);
+	 
+}
+
+
 

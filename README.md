@@ -19,7 +19,7 @@ sdd mysql support (dht22)
 
 	1. Copy cronfile to /home/pi/ folder 
 	2. Setup crontab 
-			$ crontab -f /home/pi/cronfile 
+			$ crontab  /home/pi/cronfile 
 	3. Replace [machtalk/dht22/machtalk_dht22.cpp] line 69 && line 70 with you own info 
 	4. Build for you pi 
 			$ git clone https://github.com/sndnvaps/MyRasPi.git 

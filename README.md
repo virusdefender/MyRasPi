@@ -15,6 +15,24 @@ add std::thread support (need c++11 support , just add -std=c++11 )
 sdd mysql support (dht22)
 
 
+# upload dht22 && rpi_cpu_temp to machtalk per minute 
+
+	1. Copy cronfile to /home/pi/ folder 
+	2. Setup crontab 
+			$ crontab  /home/pi/cronfile 
+	3. Replace [machtalk/dht22/machtalk_dht22.cpp] line 69 && line 70 with you own info 
+	4. Build for you pi 
+			$ git clone https://github.com/sndnvaps/MyRasPi.git 
+			$ cd MyRasPi 
+			$ sudo su
+			$ cd machtalk/dht22 
+			$ vim dht22.h # setup dht22 for you own gpio pin , i was set to gpio pin 7 
+			$ cmake . 
+			$ make install 
+	5. have fun ,you have success install machtalk_dht22 into you pi /usr/bin/ folder 
+
+
+
 
 
 

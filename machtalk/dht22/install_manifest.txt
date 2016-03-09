@@ -1,4 +1,5 @@
 /usr/bin/machtalk_dht22
-/usr/include/config.h
 /usr/lib/libTempRecord.so
-/usr/include/record_temp.hpp
+/usr/lib/libiniparser.so
+/usr/include/iniparser/dictionary.h
+/usr/include/iniparser/iniparser.h

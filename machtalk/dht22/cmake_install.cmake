@@ -50,13 +50,10 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
   endif()
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES "/home/pi/work/MyRasPi/machtalk/dht22/config.h")
-endif()
-
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/pi/work/MyRasPi/machtalk/dht22/TempRecord/cmake_install.cmake")
+  include("/home/pi/work/MyRasPi/machtalk/dht22/iniparser/cmake_install.cmake")
 
 endif()
 

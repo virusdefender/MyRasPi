@@ -1,0 +1,3 @@
+/home/pi/work/MyRasPi/machtalk/dht22/TempRecord/CMakeFiles/TempRecord.dir
+/home/pi/work/MyRasPi/machtalk/dht22/iniparser/CMakeFiles/iniparser.dir
+/home/pi/work/MyRasPi/machtalk/dht22/CMakeFiles/machtalk_dht22.dir

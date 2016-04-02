@@ -1,0 +1,1 @@
+g++  -fPIC  -std=c++11   -shared -Wl,-soname,libTempRecord.so -o libTempRecord.so CMakeFiles/TempRecord.dir/record_temp.cpp.o -lmysqlclient -L../iniparser -I../iniparser -Wl,-rpath=../iniparser -liniparser 

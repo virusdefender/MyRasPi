@@ -11,8 +11,9 @@ Add DHT22 sensor support
 
 Add machtalk.net support 
 
-add std::thread support (need c++11 support , just add -std=c++11 )
-sdd mysql support (dht22)
+add std::thread support (need c++11 support )
+
+add mysql support (dht22)
 
 
 # upload dht22 && rpi_cpu_temp to machtalk per minute 
@@ -25,14 +26,16 @@ sdd mysql support (dht22)
 			$ git clone https://github.com/sndnvaps/MyRasPi.git 
 			$ cd MyRasPi 
 			$ sudo su
-			$ cd machtalk/dht22 
-			$ vim dht22.h # setup dht22 for you own gpio pin , i was set to gpio pin 7 
+			$ cd machtalk
+			$ vim dht22/dht22.h # setup dht22 for you own gpio pin , i was set to gpio pin 7 
 			$ cmake . 
 			$ make install 
-	5. have fun ,you have success install machtalk_dht22 into you pi /usr/bin/ folder 
+	5. have fun ,you have success install machtalk_dht22 into you pi /usr/local/bin/ 
 
 
+#TODO 
 
+[] Add [iniparser](https://github.com/ndevilla/iniparser) support 
 
 
 

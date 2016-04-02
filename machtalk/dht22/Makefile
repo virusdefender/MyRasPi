@@ -169,6 +169,19 @@ TempRecord/fast:
 	$(MAKE) -f TempRecord/CMakeFiles/TempRecord.dir/build.make TempRecord/CMakeFiles/TempRecord.dir/build
 .PHONY : TempRecord/fast
 
+#=============================================================================
+# Target rules for targets named iniparser
+
+# Build rule for target.
+iniparser: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 iniparser
+.PHONY : iniparser
+
+# fast build rule for target.
+iniparser/fast:
+	$(MAKE) -f iniparser/CMakeFiles/iniparser.dir/build.make iniparser/CMakeFiles/iniparser.dir/build
+.PHONY : iniparser/fast
+
 dht22.o: dht22.c.o
 .PHONY : dht22.o
 
@@ -303,6 +316,7 @@ help:
 	@echo "... machtalk_dht22"
 	@echo "... rebuild_cache"
 	@echo "... TempRecord"
+	@echo "... iniparser"
 	@echo "... dht22.o"
 	@echo "... dht22.i"
 	@echo "... dht22.s"

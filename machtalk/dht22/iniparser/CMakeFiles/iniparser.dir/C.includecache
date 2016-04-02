@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pi/work/MyRasPi/machtalk/dht22/iniparser/dictionary.c
+dictionary.h
+/home/pi/work/MyRasPi/machtalk/dht22/iniparser/dictionary.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+
+/home/pi/work/MyRasPi/machtalk/dht22/iniparser/dictionary.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+
+/home/pi/work/MyRasPi/machtalk/dht22/iniparser/iniparser.c
+ctype.h
+-
+iniparser.h
+/home/pi/work/MyRasPi/machtalk/dht22/iniparser/iniparser.h
+
+/home/pi/work/MyRasPi/machtalk/dht22/iniparser/iniparser.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+dictionary.h
+/home/pi/work/MyRasPi/machtalk/dht22/iniparser/dictionary.h
+

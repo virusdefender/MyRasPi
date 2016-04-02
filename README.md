@@ -32,7 +32,9 @@ sdd mysql support (dht22)
 	5. have fun ,you have success install machtalk_dht22 into you pi /usr/bin/ folder 
 
 
+#TODO 
 
+[] Add [iniparser](https://github.com/ndevilla/iniparser) support 
 
 
 

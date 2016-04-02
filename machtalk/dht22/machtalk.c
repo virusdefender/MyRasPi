@@ -66,7 +66,7 @@ void  machtalk_post(const char *api_token,const char *device_id,const char *devi
         /* 构造服务器端的ip和端口信息，具体结构体可以查资料 */  
         bzero(&s_add,sizeof(struct sockaddr_in));  
         s_add.sin_family=AF_INET;  
-        s_add.sin_addr.s_addr= inet_addr("123.59.47.52"); /* ip转换为4字节整形，使用时需要根据服务端ip进行更改 */ 
+        s_add.sin_addr.s_addr= inet_addr("120.132.49.137"); /* ip转换为4字节整形，使用时需要根据服务端ip进行更改 */ 
         s_add.sin_port=htons(12086); //this is the ip port for upload
         /* 建立socket 使用因特网，TCP流传输 */ 
         cfd = socket(AF_INET, SOCK_STREAM, 0);  

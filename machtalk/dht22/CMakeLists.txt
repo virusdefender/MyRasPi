@@ -56,7 +56,7 @@ endif (SUPPORT_MYSQL_DB)
 
 target_link_libraries(machtalk_dht22  iniparser )
 #SET(EXECUTABLE_OUTPUT_PATH /usr/local/bin)
-SET(CMAKE_INSTALL_PREFIX /usr)
+#SET(CMAKE_INSTALL_PREFIX /usr)
 
 INSTALL(TARGETS machtalk_dht22 DESTINATION bin)
 #INSTALL(FILES "${PROJECT_BINARY_DIR}/config.h"

@@ -22,11 +22,12 @@ set(CMAKE_CXX_CFLAGS "-Wl,-soname=libTempRecord.so,-rpath=/usr/lib")
 set(CMAKE_CXX_CFLAGS "-I${PROJECT_SOURCE_DIR}/iniparser")
 #set(CMAKE_CXX_CFLAGS "-Wl,-rpath=../iniparser")
 target_link_libraries(TempRecord -lmysqlclient )
-target_link_libraries(TempRecord -L../iniparser  -I../iniparser -Wl,-rpath=../iniparser -liniparser)
+target_link_libraries(TempRecord -L../iniparser  -I../iniparser -Wl,-rpath=../iniparser)
+target_link_libraries(TempRecord iniparser )
 INSTALL(TARGETS TempRecord   DESTINATION lib)
 #INSTALL(FILES record_temp.hpp DESTINATION include)
 
-set_target_properties(libTempRecord PROPERTIES OUTPUT_NAME "TempRecord")
+set_target_properties(TempRecord PROPERTIES OUTPUT_NAME "TempRecord")
 
 
 	

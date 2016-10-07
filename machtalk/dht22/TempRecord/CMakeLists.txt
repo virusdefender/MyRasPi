@@ -26,7 +26,7 @@ target_link_libraries(TempRecord -L../iniparser  -I../iniparser -Wl,-rpath=../in
 INSTALL(TARGETS TempRecord   DESTINATION lib)
 #INSTALL(FILES record_temp.hpp DESTINATION include)
 
-#set_target_properties(libTempRecord PROPERTIES OUTPUT_NAME "TempRecord")
+set_target_properties(libTempRecord PROPERTIES OUTPUT_NAME "TempRecord")
 
 
 	

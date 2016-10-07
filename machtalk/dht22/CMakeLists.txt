@@ -49,9 +49,9 @@ target_link_libraries(machtalk_dht22 -lwiringPi)
 target_link_libraries(machtalk_dht22 -lpthread)
 
 if (SUPPORT_MYSQL_DB)
-	LINK_DIRECTORIES("/usr/local/lib")
-	TARGET_LINK_LIBRARIES(machtalk_dht22   -ldl -lrt -Wl,-rpath=./TempRecord,-rpath=/usr/lib  -L/usr/lib -L./TempRecord -lTempRecord)
-#	TARGET_LINK_LIBRARIES(machtalk_dht22  TempRecord)
+#	LINK_DIRECTORIES("/usr/local/lib")
+#	TARGET_LINK_LIBRARIES(machtalk_dht22   -ldl -lrt -Wl,-rpath=./TempRecord,-rpath=/usr/lib  -L/usr/lib -L./TempRecord -lTempRecord)
+	TARGET_LINK_LIBRARIES(machtalk_dht22  TempRecord)
 endif (SUPPORT_MYSQL_DB)
 
 target_link_libraries(machtalk_dht22  iniparser )

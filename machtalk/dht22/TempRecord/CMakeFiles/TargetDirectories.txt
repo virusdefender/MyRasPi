@@ -1,1 +1,0 @@
-/home/pi/work/MyRasPi/machtalk/dht22/TempRecord/CMakeFiles/TempRecord.dir
